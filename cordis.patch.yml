@@ -1,0 +1,3 @@
+- insert:
+    - id: 'dsh-leetcode-bench:bench'
+      name: 'dsh-leetcode-bench'

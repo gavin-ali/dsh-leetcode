@@ -1,0 +1,66 @@
+{
+  "name": "dsh-leetcode-bench",
+  "version": "0.1.0",
+  "description": "LeetCode practice bench for DeepSeek Harness: the problem bank is fetched from leetcode.cn at runtime, with per-problem Java drafts, dictionary completion, one-click submission through a local cookie, and copy-to-chat AI coaching.",
+  "type": "module",
+  "main": "index.js",
+  "license": "MIT",
+  "author": "gavin-ali",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gavin-ali/dsh-leetcode.git"
+  },
+  "homepage": "https://github.com/gavin-ali/dsh-leetcode#readme",
+  "bugs": {
+    "url": "https://github.com/gavin-ali/dsh-leetcode/issues"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "leetcode",
+    "algorithm",
+    "practice",
+    "java"
+  ],
+  "engines": {
+    "dsh": ">=0.2.0-rc.1 <0.3.0",
+    "node": ">=22"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "host/leetcode.mjs",
+    "lib/client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "README.md",
+    "LICENSE",
+    "docs/preview.png"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node scripts/smoke.mjs && node scripts/enter-indent-test.mjs"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ]
+    }
+  }
+}

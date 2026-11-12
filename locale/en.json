@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "LeetCode practice bench",
+    "description": "A full-page practice bench opened from the left sidebar: the problem bank is fetched live from leetcode.cn (search, difficulty filter, paging), with per-problem Java drafts, local completion, one-click submission and copy-to-chat coaching."
+  }
+}
