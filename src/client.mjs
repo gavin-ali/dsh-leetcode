@@ -28,7 +28,7 @@ window.__ModuleLoader__.load({
     // ---------------------------------------------------------------------
 
     const zh = {
-      'panel.label': '刷题台B',
+      'panel.label': '刷题台',
       'page.title': 'LeetCode 刷题台',
       'page.summary': '已通过 {done}（本机勾选）· 全站 {total} 题',
       'page.summaryUnknown': '已通过 {done}（本机勾选）',
@@ -1991,38 +1991,10 @@ window.__ModuleLoader__.load({
 
     const inject = ['slots', 'locale'];
 
-    function traceProbe(event) {
-      try {
-        fetch('/api/dsh-leetcode-bench/trace', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify(event),
-        }).catch(() => {});
-      } catch (error) {
-        /* diagnostics must never break the page */
-      }
-    }
-
     function apply(ctx) {
       const t = ctx.locale.bind(NS);
-      try {
-        fetch('/api/dsh-leetcode-bench/trace', {
-          method: 'POST',
-          headers: { 'content-type': 'application/json' },
-          body: JSON.stringify({ event: 'client-apply', panel: PANEL_ID, href: typeof location === 'undefined' ? '' : location.href }),
-        }).catch(() => {});
-      } catch (error) {
-        /* a missing trace route must not stop the page */
-      }
 
       ctx.effect(() => ctx.locale.register(NS, { zh, en }), 'algo-bench: dictionaries');
-      let labelProbe = '';
-      try {
-        labelProbe = String(t('panel.label'));
-      } catch (error) {
-        labelProbe = `threw: ${String(error)}`;
-      }
-      traceProbe({ event: 'slots', hasSlots: typeof ctx.slots, label: labelProbe });
       ctx.effect(() => ctx.slots.inject('main', () => ctx.slots.register({
         name: 'main',
         key: PANEL_ID,
@@ -2037,7 +2009,6 @@ window.__ModuleLoader__.load({
           locale: NS,
           label: () => t('panel.label'),
         }, BenchIcon));
-        traceProbe({ event: 'panellist-ok', id: PANEL_ID });
         return dispose;
       }, 'algo-bench: sidebar entry');
     }

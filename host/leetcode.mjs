@@ -9,7 +9,7 @@
  * @module leetcode-bench/host
  */
 
-import { appendFileSync, chmodSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { chmodSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
 
@@ -323,17 +323,6 @@ async function listProblems(cookie, query) {
 }
 
 
-/** Diagnostic: the browser half reports that it loaded and what it registered. */
-function trace(event) {
-  try {
-    const file = join(homedir(), '.dsh', 'dsh-leetcode-bench', 'client-trace.log');
-    mkdirSync(dirname(file), { recursive: true });
-    appendFileSync(file, `${new Date().toISOString()} ${JSON.stringify(event)}\n`, 'utf8');
-  } catch (error) {
-    /* diagnostics never break the page */
-  }
-}
-
 /**
  * Register every route the bench page calls, for the plugin lifetime.
  * @param ctx - Host context carrying `connection`.
@@ -368,16 +357,6 @@ export function registerLeetcodeRoutes(ctx) {
     } catch (error) {
       return fail(error, 500);
     }
-  });
-
-  register('/trace', ['POST'], async (request) => {
-    try {
-      const body = await request.json();
-      trace(body);
-    } catch (error) {
-      trace({ error: String(error) });
-    }
-    return json({ ok: true });
   });
 
   register('/problems', ['GET'], async (request) => {

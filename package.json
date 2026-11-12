@@ -1,6 +1,6 @@
 {
   "name": "dsh-leetcode-bench",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "LeetCode practice bench for DeepSeek Harness: the problem bank is fetched from leetcode.cn at runtime, with per-problem Java drafts, dictionary completion, one-click submission through a local cookie, and copy-to-chat AI coaching.",
   "type": "module",
   "main": "index.js",
