@@ -166,20 +166,21 @@ async function submitCode(cookie, slug, code, lang) {
     throw new Error('还没保存登录信息：先在页面里粘贴 LEETCODE_SESSION 和 csrftoken');
   }
   const info = await fetchStatement(cookie, slug);
-  const form = new URLSearchParams({
-    question_id: String(info.questionId),
+  // The CN endpoint takes JSON now; a form-encoded body gets "invalid request body".
+  const requestBody = {
     lang,
+    question_id: String(info.questionId),
     typed_code: code,
-  });
+  };
   const response = await fetch(`${SITE}/problems/${slug}/submit/`, {
     method: 'POST',
     headers: {
       ...baseHeaders(cookie),
-      'content-type': 'application/x-www-form-urlencoded',
+      'content-type': 'application/json',
       referer: `${SITE}/problems/${slug}/`,
       'x-csrftoken': cookie.csrf,
     },
-    body: form.toString(),
+    body: JSON.stringify(requestBody),
   });
   const text = await response.text();
   let payload;
